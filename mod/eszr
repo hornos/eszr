@@ -42,3 +42,6 @@ if { $module != $current } {
 setenv ESZR_MODULE  $module
 setenv ESZR_ROOT    $approot
 setenv ESZR_ROOT_SW $approot/sw
+
+### path
+prepend-path PATH ${approot}/bin

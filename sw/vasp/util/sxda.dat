@@ -1,0 +1,26 @@
+
+# Reciprocal space cutoﬀ energy (eV).
+# This implicitly deﬁnes the Fourier mesh size.
+# 1 eV = 0.073498618 Ry
+# VASP ENAUG
+ECUT=840
+
+# No. of added or removed electrons
+# -1 * charge ot the system
+CHARGE=0
+
+# Dielectric constant
+EPS=0.0
+
+# Shift long-range potential (eV)
+# SHIFT=0
+
+# Position of the defect in relative coordinates
+POS="0.0 0.0 0.0"
+
+# Compressed files will be uncompressed
+# Reference potential (perfect cell)
+VREF="perfect.LOCPOT"
+
+# Defect potential (cell eith the defect)
+VDEF="defect.LOCPOT"
