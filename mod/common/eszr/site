@@ -39,9 +39,9 @@ if { $module != $current } {
 }
 
 ### env
-setenv ESZR_MODULE  $module
-setenv ESZR_ROOT    $approot
-setenv ESZR_ROOT_SW $approot/sw
+setenv ESZR_MODULE $module
+setenv ESZR_ROOT   $approot
+setenv ESZR_PKG    $approot/pkg/site
 
 ### path
 prepend-path PATH ${approot}/bin
