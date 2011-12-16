@@ -8,7 +8,7 @@ export SCRATCH="/tmp"
 
 ### set
 for _scr in ${scratch} ; do
-  if ! test -z "{!_scr}" ; then
+  if ! test -z "${!_scr}" ; then
     export SCRATCH="${!_scr}"
     break
   fi
