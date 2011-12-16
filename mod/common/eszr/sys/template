@@ -11,13 +11,13 @@ set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
 
 ### eszr
-if [info exists env(ESZR_ROOT_SW)] {
-  set eszr_root_sw $env(ESZR_ROOT_SW)
+if [info exists env(ESZR_PKG)] {
+  set eszr_pkg $env(ESZR_PKG)
 } else {
-  puts stderr "Error: set ESZR_ROOT_SW"
+  puts stderr "Error: set ESZR_PKG"
   break
 }
-set approot $eszr_root_sw/$module
+
 set appname "System Environment"
 set appdesc ""
 set appurl  ""
