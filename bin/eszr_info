@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "ESZR Environment"
+echo "--------------------------------"
+set | grep ESZR
