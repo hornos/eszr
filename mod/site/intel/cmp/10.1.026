@@ -53,7 +53,7 @@ prepend-path MANPATH $approot/fce/$release/man
 ### C/C++
 prepend-path PATH $approot/cce/$release/bin
 prepend-path LD_LIBRARY_PATH $approot/cce/$release/lib
-prepend-path NLSPATH $approot/cce/$release/lib/locale/en_US
+prepend-path NLSPATH $approot/cce/$release/lib/locale/en_US/%N
 prepend-path MANPATH $approot/cce/$release/man
 
 ### Debugger
