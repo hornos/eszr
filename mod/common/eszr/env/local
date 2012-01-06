@@ -9,8 +9,8 @@ set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
 
 ### eszr
-set approot $env(HOME)/site/eszr
-set appname "Home ESZR Environment"
+set approot $env(HOME)/local
+set appname "Local ESZR Environment"
 set appdesc ""
 set appurl  ""
 set license GPL
@@ -26,22 +26,10 @@ proc ModulesHelp { } {
 
 module-whatis "$appname"
 
-### conflict
-if [info exists env(ESZR_MODULE)] {
-  set current $env(ESZR_MODULE)
-} else {
-  set current $module
-}
-if { $module != $current } {
-  if { [ is-loaded $current ] } {
-    module unload $current
-  }
-}
-
 ### env
-setenv ESZR_MODULE $module
-setenv ESZR_ROOT   $approot
-setenv ESZR_PKG    $approot/pkg/local
-
-### path
-prepend-path PATH ${approot}/bin
+prepend-path PATH            $approot/bin
+prepend-path PATH            $approot/usr/bin
+prepend-path MANPATH         $approot/share/man
+prepend-path PKG_CONFIG_PATH $approot/lib/pkgconfig
+prepend-path PYTHONPATH      $approot/lib64/python2.6/site-packages
+prepend-path LD_LIBRARY_PATH $approot/lib:$approot/lib64
