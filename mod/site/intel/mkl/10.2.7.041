@@ -44,8 +44,8 @@ setenv INTEL_MKL $module
 setenv INTEL_MKL_HOME $approot/$app/$release
 
 prepend-path LD_LIBRARY_PATH $approot/$app/$release/lib/$arch
-prepend-path MANPATH $approot/$app/$release/man
-prepend-path NLSPATH $approot/$app/$release/lib/$arch/local/en_US
+prepend-path MANPATH $approot/$app/$release/man/en_US
+prepend-path NLSPATH $approot/$app/$release/lib/$arch/local/en_US/%N
 
 ### mkl
 setenv OMP_NUM_THREADS 1

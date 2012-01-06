@@ -47,7 +47,7 @@ setenv INTEL_ICC_HOME   $approot/cce/$release
 ### Fortran
 prepend-path PATH $approot/fce/$release/bin
 prepend-path LD_LIBRARY_PATH $approot/fce/$release/lib
-prepend-path NLSPATH $approot/fce/$release/lib/locale/en_US
+prepend-path NLSPATH $approot/fce/$release/lib/locale/en_US/%N
 prepend-path MANPATH $approot/fce/$release/man
 
 ### C/C++

@@ -50,7 +50,7 @@ setenv INTEL_ICC_HOME   $approot/$app-$release/compiler
 prepend-path PATH $approot/$app-$release/bin/$arch
 prepend-path MANPATH $approot/$app-$release/man
 prepend-path LD_LIBRARY_PATH $approot/$app-$release/compiler/lib/$arch
-prepend-path NLSPATH $approot/$app-$release/compiler/lib/$arch/locale/en_US
+prepend-path NLSPATH $approot/$app-$release/compiler/lib/$arch/locale/en_US/%N
 
 ### License
 setenv INTEL_LICENSE_FILE /opt/intel/licenses/
