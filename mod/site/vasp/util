@@ -8,12 +8,20 @@ set module  [module-info name]
 set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
 
-set approot /opt/hp
-set appname "Platform MPI"
-set appdesc "HP Platform MPI"
-set appurl  "http://www.platform.com/cluster-computing/platform-mpi"
-set license HP
-set arch linux_amd64
+
+### eszr
+if [info exists env(ESZR_PKG)] {
+  set eszr_pkg $env(ESZR_PKG)
+} else {
+  puts stderr "Error: set ESZR_PKG"
+  break
+}
+
+set approot $eszr_pkg/$module
+set appname "VASP Utilities"
+set appdesc "VASP Utilities"
+set appurl  ""
+set license GPL
 
 ### help
 proc ModulesHelp { } {
@@ -27,8 +35,8 @@ proc ModulesHelp { } {
 module-whatis "$appname"
 
 ### conflict
-if [info exists env(ESZR_MPI)] {
-  set current $env(ESZR_MPI)
+if [info exists env(VASP_UTIL)] {
+  set current $env(VASP_UTIL)
 } else {
   set current $module
 }
@@ -39,12 +47,7 @@ if { $module != $current } {
 }
 
 ### env
-setenv ESZR_MPI $module
-setenv HP_MPI_HOME $approot/$module
+setenv VASP_UTIL $module
+setenv VASP_UTIL_HOME $approot
 
-prepend-path LD_LIBRARY_PATH $approot/$module/lib/$arch
-prepend-path PATH $approot/$module/bin
-prepend-path MANPATH $approot/$module/share/man
-
-### mpi
-setenv MPI_ROOT $approot/$module
+prepend-path PATH $approot
