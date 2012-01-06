@@ -1,19 +1,20 @@
 #%Module1.0
 
 ### errors
-# module-log error null
+module-log error null
 
 ### globals
 set module  [module-info name]
 set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
 
-set approot /opt/sgi
-set appname "SGI MPI Perfboost"
-set appdesc "A wrapper library to run applications compiled against other MPI implementations"
-set appurl  "http://techpubs.sgi.com/library/tpl/cgi-bin/getdoc.cgi?coll=linux&db=bks&fname=/SGI_Developer/MPT_UG/ch06.html"
-set license SGI
-set app $module
+set approot /opt/hp
+set appname "Platform MPI"
+set appdesc "HP Platform MPI"
+set appurl  "http://www.platform.com/cluster-computing/platform-mpi"
+set license HP
+set arch linux_amd64
+set app mpi
 
 ### help
 proc ModulesHelp { } {
@@ -27,8 +28,8 @@ proc ModulesHelp { } {
 module-whatis "$appname"
 
 ### conflict
-if [info exists env(SGI_PERFBOOST)] {
-  set current $env(SGI_PERFBOOST)
+if [info exists env(ESZR_MPI)] {
+  set current $env(ESZR_MPI)
 } else {
   set current $module
 }
@@ -38,10 +39,13 @@ if { $module != $current } {
   }
 }
 
-# env
-setenv SGI_PERFBOOST $module
-setenv SGI_PERFBOOST_HOME $approot/$app
+### env
+setenv ESZR_MPI $module
+setenv HP_MPI_HOME $approot/$app/$release
 
-# path
-prepend-path PATH $approot/$app/bin
-prepend-path LD_LIBRARY_PATH $approot/$app/lib
+prepend-path LD_LIBRARY_PATH $approot/$app/$release/lib/$arch
+prepend-path PATH $approot/$app/$release/bin
+prepend-path MANPATH $approot/$app/$release/share/man
+
+### hp
+setenv MPI_ROOT $approot/$app/$release

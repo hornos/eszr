@@ -3,12 +3,13 @@
 #%Module1.0
 
 ### errors
-module-log error null
+# module-log error null
 
 ### globals
 set module  [module-info name]
 set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
+set app template
 
 ### eszr
 if [info exists env(ESZR_PKG)] {
@@ -51,6 +52,6 @@ if { $module != $current } {
 setenv ESZR_TEMPLATE $module
 
 ### path
-prepend-path PATH $approot/bin
-prepend-path MANPATH $approot/man
-prepend-path LD_LIBRARY_PATH $approot/lib
+prepend-path PATH $approot/$app/bin
+prepend-path MANPATH $approot/$app/man
+prepend-path LD_LIBRARY_PATH $approot/$app/lib

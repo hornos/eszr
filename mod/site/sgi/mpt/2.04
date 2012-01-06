@@ -1,28 +1,19 @@
 #%Module1.0
 
 ### errors
-module-log error null
+# module-log error null
 
 ### globals
 set module  [module-info name]
 set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
 
-### eszr
-# disabled sue to default rpm install
-# if [info exists env(ESZR_PKG)] {
-#   set eszr_pkg $env(ESZR_PKG)
-# } else {
-#   puts stderr "Error: set ESZR_PKG"
-#   break
-# }
-# set approot $eszr_pkg/$module
-
-set approot /opt/sgi/mpt
+set approot /opt/sgi
 set appname "SGI MPT (MPI)"
 set appdesc "SGI Message Passing Toolkit (MPT)"
 set appurl  "http://techpubs.sgi.com/library/tpl/cgi-bin/browse.cgi?cmd=toc&coll=linux&db=bks&pth=/SGI_Developer/MPT_UG"
 set license SGI
+set app mpt
 
 ### help
 proc ModulesHelp { } {
@@ -47,18 +38,16 @@ if { $module != $current } {
   }
 }
 
-# env
+### env
 setenv ESZR_MPI $module
-setenv SGI_MPT_HOME $approot
+setenv SGI_MPT_HOME $approot/$app/mpt-$release
 
-# path
-prepend-path LD_LIBRARY_PATH $approot/mpt-$release/lib
-prepend-path PATH $approot/mpt-$release/bin
-prepend-path MANPATH $approot/mpt-$release/man
+prepend-path LD_LIBRARY_PATH $approot/$app/mpt-$release/lib
+prepend-path PATH $approot/$app/mpt-$release/bin
+prepend-path MANPATH $approot/$app/mpt-$release/man
 
-# MPI
-setenv MPI_ROOT $approot/mpt-$release
+setenv MPI_ROOT $approot/$app/mpt-$release
 
-# SGI
+###mpt
 setenv MPI_BUFS_PER_HOST 8192
 setenv MPI_GROUP_MAX 256

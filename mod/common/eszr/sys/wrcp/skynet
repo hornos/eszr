@@ -16,7 +16,7 @@ if [info exists env(ESZR_PKG)] {
   break
 }
 
-set appname "System Environment"
+set appname "WRCP Skynet System Environment"
 set appdesc ""
 set appurl  ""
 set license GPL

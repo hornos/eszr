@@ -1,28 +1,19 @@
 #%Module1.0
 
 ### errors
-module-log error null
+# module-log error null
 
 ### globals
 set module  [module-info name]
 set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
 
-### eszr
-# disabled sue to default rpm install
-# if [info exists env(ESZR_PKG)] {
-#   set eszr_pkg $env(ESZR_PKG)
-# } else {
-#   puts stderr "Error: set ESZR_PKG"
-#   break
-# }
-# set approot $eszr_pkg/$module
-
-set approot /opt/$module
+set approot /opt/sgi
 set appname "SGI MPT BLCR Checkpoint"
-set appdesc "SGI MPT support for the Berkeley Lab Checkpoint/Restar"
+set appdesc "SGI MPT support for the Berkeley Lab Checkpoint/Restart"
 set appurl  "http://techpubs.sgi.com/library/tpl/cgi-bin/getdoc.cgi?coll=linux&db=bks&fname=/SGI_Developer/MPT_UG/ch07.html"
 set license SGI
+set app $module
 
 ### help
 proc ModulesHelp { } {
@@ -47,10 +38,10 @@ if { $module != $current } {
   }
 }
 
-# env
+### env
 setenv SGI_BLCR $module
-setenv SGI_BLCR_HOME $approot
+setenv SGI_BLCR_HOME $approot/$app
 
-# path
-prepend-path PATH $approot/bin
-prepend-path LD_LIBRARY_PATH $approot/lib
+### path
+prepend-path PATH $approot/$app/bin
+prepend-path LD_LIBRARY_PATH $approot/$app/lib
