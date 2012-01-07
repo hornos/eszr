@@ -9,12 +9,12 @@ set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
 
 set approot /opt/intel
-set appname "Intel Compiler Suite"
-set appdesc "Intel Compiler Suite 2011"
+set appname "Intel Compiler"
+set appdesc "Intel Compiler 2011 SP1"
 set appurl  "http://software.intel.com/en-us/articles/intel-compilers/"
 set license Intel
 set arch    intel64
-set app     composerxe
+set app     composer_xe
 
 ### help
 proc ModulesHelp { } {
@@ -43,14 +43,14 @@ if { $module != $current } {
 setenv INTEL_COMPILER $module
 setenv INTEL_COMPILER_HOME $approot
 
-setenv INTEL_IFORT_HOME $approot/$app-$release/compiler
-setenv INTEL_ICC_HOME   $approot/$app-$release/compiler
+setenv INTEL_IFORT_HOME $approot/$app_$release/compiler
+setenv INTEL_ICC_HOME   $approot/$app_$release/compiler
 
 ### Compiler
-prepend-path PATH $approot/$app-$release/bin/$arch
-prepend-path MANPATH $approot/$app-$release/man
-prepend-path LD_LIBRARY_PATH $approot/$app-$release/compiler/lib/$arch
-prepend-path NLSPATH $approot/$app-$release/compiler/lib/$arch/locale/en_US/%N
+prepend-path PATH $approot/$app_$release/bin/$arch
+prepend-path MANPATH $approot/$app_$release/man
+prepend-path LD_LIBRARY_PATH $approot/$app_$release/compiler/lib/$arch
+prepend-path NLSPATH $approot/$app_$release/compiler/lib/$arch/locale/en_US/%N
 
 ### License
 setenv INTEL_LICENSE_FILE /opt/intel/licenses/
