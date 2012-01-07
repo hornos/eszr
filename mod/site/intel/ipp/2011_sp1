@@ -41,6 +41,6 @@ if { $module != $current } {
 
 ### env
 setenv INTEL_IPP $module
-setenv INTEL_IPP_HOME $approot/$app_$release/ipp
+setenv INTEL_IPP_HOME $approot/${app}_${release}/ipp
 
-prepend-path LD_LIBRARY_PATH $approot/$app_$release/ipp/lib/$arch
+prepend-path LD_LIBRARY_PATH $approot/${app}_${release}/ipp/lib/$arch
