@@ -41,9 +41,9 @@ if { $module != $current } {
 
 ### env
 setenv INTEL_MKL $module
-setenv INTEL_MKL_HOME $apphome/$app-$release/mkl
+setenv INTEL_MKL_HOME $approot/$app-$release/mkl
 
-prepend-path LD_LIBRARY_PATH $apphome/$app-$release/mkl/lib/$arch
+prepend-path LD_LIBRARY_PATH $approot/$app-$release/mkl/lib/$arch
 
 ### mkl
 setenv OMP_NUM_THREADS 1
