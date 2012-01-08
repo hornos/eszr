@@ -18,10 +18,10 @@ if [info exists env(ESZR_PKG)] {
 }
 
 set approot $eszr_pkg/$module
-set appname "VASP"
-set appdesc "VASP"
-set appurl  "http://cms.mpi.univie.ac.at/vasp/"
-set license VASP
+set appname "FFTW 3"
+set appdesc "FFTW 3"
+set appurl  "http://www.fftw.org/"
+set license GPL
 
 ### help
 proc ModulesHelp { } {
@@ -35,8 +35,8 @@ proc ModulesHelp { } {
 module-whatis "$appname"
 
 ### conflict
-if [info exists env(VASP_PRG)] {
-  set current $env(VASP_PRG)
+if [info exists env(FFTW3_LIB)] {
+  set current $env(FFTW3_LIB)
 } else {
   set current $module
 }
@@ -47,7 +47,9 @@ if { $module != $current } {
 }
 
 ### env
-setenv VASP_PRG $module
-setenv VASP_HOME $approot
+setenv FFTW3_LIB $module
+setenv FFTW3_HOME $approot
 
+prepend-path LD_LIBRARY_PATH $approot/lib
 prepend-path PATH $approot/bin
+prepend-path MANPATH $approot/share/man
