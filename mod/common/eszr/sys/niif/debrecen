@@ -57,5 +57,4 @@ setenv ESZR_SCRATCH /scratch/$env(USER)
 ### mpt
 setenv MPI_BUFS_PER_HOST 8192
 setenv MPI_IB_RAILS 2
-
-# setenv MPI_GROUP_MAX 256
+setenv MPI_BUFS_THRESHOLD 0
