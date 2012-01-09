@@ -47,7 +47,3 @@ prepend-path PATH $approot/$app/mpt-$release/bin
 prepend-path MANPATH $approot/$app/mpt-$release/man
 
 setenv MPI_ROOT $approot/$app/mpt-$release
-
-###mpt
-setenv MPI_BUFS_PER_HOST 8192
-setenv MPI_GROUP_MAX 256
