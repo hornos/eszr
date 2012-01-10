@@ -16,7 +16,7 @@ sxda_ev2ry=0.073498618
 sxda_ang2bohr=1.889725989
 
 ### help
-function sxda/help() {
+function help/sxda() {
   cat << EOF
 Usage: ${gbn} options
               -i input.dat - parameter file
@@ -77,7 +77,7 @@ _a="x"
 _r=false
 while getopts hmdrpi:a: o; do
   case "$o" in
-    h) sxda/help;;
+    h) help/sxda;;
     m) sxda/man;;
     d) sxda/get;;
     r) _r=true;;

@@ -1,0 +1,60 @@
+#!/bin/bash
+
+### global
+gbn=$(basename ${BASH_SOURCE})
+
+### functions
+function help/vstime() {
+  cat << EOF
+  Usage: ${gbn} OUTCAR
+EOF
+  exit 1
+}
+
+function vstime/zcat() {
+  local _f="${1}"
+  local _n=${2:-25}
+  local _cat="cat"
+  if test -z "${_f}" ; then
+    return 1
+  fi
+
+  local _t=$(file --mime-type "${_f}" | cut -d"/" -f2)
+  if test ${_t} = "x-gzip" ; then
+    _cat="zcat"
+  fi
+  ${_cat} "${_f}" | tail -n${_n}
+}
+
+function vstime/time() {
+  local _t=${1}
+  local _l="${2}"
+  _t=${_t/.*}
+  _t=$((_t+1))
+
+  if test -z "${_l}" ; then
+    printf "%02d:%02d:%02d\n" $((_t/3600)) $((_t/60%60)) $((_t%60))
+  else
+    printf "%7s: %02d:%02d:%02d\n" ${_l} $((_t/3600)) $((_t/60%60)) $((_t%60))
+  fi
+}
+
+### args
+if test $# -lt 1 || \
+   test "${1}" = "-h" ; then
+  help/vstime
+fi
+
+### main
+_o="${1:-OUTCAR}"
+if ! test -r "${_o}" ; then
+  return ${_false_}
+fi
+
+_e=$(vstime/zcat ${1} | awk '/Elapsed/{print $4}')
+_u=$(vstime/zcat | awk '/User/{print $4}')
+_s=$(vstime/zcat | awk '/System/{print $4}')
+
+vstime/time ${_e} "Elapsed"
+vstime/time ${_u} "User"
+vstime/time ${_s} "System"
