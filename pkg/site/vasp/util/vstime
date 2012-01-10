@@ -51,9 +51,9 @@ if ! test -r "${_o}" ; then
   return ${_false_}
 fi
 
-_e=$(vstime/zcat ${1} | awk '/Elapsed/{print $4}')
-_u=$(vstime/zcat | awk '/User/{print $4}')
-_s=$(vstime/zcat | awk '/System/{print $4}')
+_e=$(vstime/zcat "${_o}" | awk '/Elapsed/{print $4}')
+_u=$(vstime/zcat "${_o}" | awk '/User/{print $4}')
+_s=$(vstime/zcat "${_o}" | awk '/System/{print $4}')
 
 vstime/time ${_e} "Elapsed"
 vstime/time ${_u} "User"
