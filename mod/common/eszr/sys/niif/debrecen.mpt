@@ -16,7 +16,7 @@ if [info exists env(ESZR_PKG)] {
   break
 }
 
-set appname "NIIF Debrecen System Environment"
+set appname "NIIF Debrecen System Environment MPT"
 set appdesc ""
 set appurl  ""
 set license GPL
@@ -32,23 +32,8 @@ proc ModulesHelp { } {
 
 module-whatis "$appname"
 
-### conflict
-if [info exists env(ESZR_SYSTEM)] {
-  set current $env(ESZR_SYSTEM)
-} else {
-  set current $module
-}
-if { $module != $current } {
-  if { [ is-loaded $current ] } {
-    module unload $current
-  }
-}
-
-### env
-setenv ESZR_SYSTEM $module
-
-### system
-setenv ESZR_ARCH intel64
-setenv ESZR_HOME $env(HOME)
-setenv ESZR_DATA $env(HOME)
-setenv ESZR_SCRATCH /scratch/$env(USER)
+### mpt
+setenv MPI_BUFS_PER_HOST 8192
+setenv MPI_IB_RAILS 2
+setenv MPI_BUFS_THRESHOLD 0
+setenv MPI_GROUP_MAX 512
