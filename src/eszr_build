@@ -1,0 +1,145 @@
+#!/bin/bash
+source kernel
+
+eszr_build_get="wget -vc --no-check-certificate"
+
+function help/eszr_build() {
+  cat << EOF
+  Usage: ${gbn} options
+                -p tgz - tgz package
+                -v - verbose
+                -h - help
+                -l - package list
+EOF
+  exit 1
+}
+
+function eszr_build/download() {
+  ${eszr_build_get} "${pkg_url}"
+  if test $? -gt 0 ; then
+    msg "Download failed: ${pgk_url}"
+    exit 1
+  fi
+  if ! test -r "${pkg}" ; then
+    msg "Not found: ${pkg}"
+    exit 1
+  fi
+}
+
+function eszr_build/extract() {
+  tar xvzf "${pkg}"
+  if test $? -gt 0 ; then
+    msg "Extract failed: ${pkg}"
+    exit 1
+  fi
+}
+
+function eszr_build/prepare() {
+  if ! test -d "${_dir}" ; then
+    msg "Directory not found: ${_dir}"
+    exit 1
+  fi
+  cd "${_dir}"
+
+  if ! test -x "./configure" ; then
+    msg "Configure not found"
+    exit 1
+  fi
+
+  _prefix="${ESZR_PKG}/${APP}/${VER}"
+  if test -d "${_prefix}" ; then
+    msg "Directory found: ${_prefix}"
+    exit 1
+  fi
+
+  mkdir -p "${_prefix}"
+  if test $? -gt 0 ; then
+    msg "Directory failed: ${_prefix}"
+    exit 1
+  fi
+
+  ./configure --prefix=${_prefix} ${OPT}
+  if test $? -gt 0 ; then
+    msg "Configure failed"
+    exit 1
+  fi
+}
+
+
+_p=""
+while getopts hvlp: o; do
+  case "$o" in
+    p) _p=$OPTARG;;
+    v) gdbg=true;;
+    h|*) help/eszr_build;;
+  esac
+done
+
+### main
+echo ""
+msg "ESZR Package Build"
+gui/line
+if test -z "${_p}" || \
+ ! test -r "${_p}" ; then
+  msg "Package not found: ${_p}"
+  exit 1
+fi
+
+source "${_p}"
+
+### check
+for i in ESZR_PKG DIR URL TGZ APP VER ; do
+  if test -z "${!i}" ; then
+    msg "Not found: \$${i}"
+    exit 1
+  fi
+done
+
+### user options
+_u=${_p%cfg}${USER}
+if test -r "${_u}" ; then
+  source "${_u}"
+fi
+
+### download
+answer "Download?"
+if test $? -gt 0 ; then
+  exit 1
+fi
+pkg_url="${URL}/${TGZ}"
+pkg="${TGZ}"
+eszr_build/download
+eszr_build/extract
+
+### prepare
+gui/line
+answer "Prepare?"
+if test $? -gt 0 ; then
+  exit 1
+fi
+_dir="${DIR}"
+eszr_build/prepare
+
+### build
+gui/line
+answer "Make?"
+if test $? -gt 0 ; then
+  exit 1
+fi
+make
+if test $? -gt 0 ; then
+  echo "Make failed"
+  exit 1
+fi
+
+### install
+gui/line
+answer "Install?"
+if test $? -gt 0 ; then
+  exit 1
+fi
+make install
+if test $? -gt 0 ; then
+  echo "Install failed"
+  exit 1
+fi

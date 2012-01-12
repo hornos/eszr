@@ -1,0 +1,65 @@
+### shf3
+gbn=$(basename ${BASH_SOURCE})
+gdbg=false
+
+_true_=0
+_false_=1
+
+function gui/line() {
+  local _l=${1:-84}
+  local _ch="${2:--}"
+  local i
+  for ((i=0;i<_l;++i)) ; do
+    printf "${_ch}"
+  done
+  printf "\n"
+}
+
+function msg() {
+  echo -e "[${gbn}] ${*}"
+}
+
+function answer() {
+  local _m="${1:-Answer}"
+  local _f=${2:-3}
+  local _a
+
+  while true ; do
+    echo -en "[${gbn}] ${_m} (y/n/q) [${_f}]: "
+    read _a
+    _a=$(str/tolower ${_a})
+    case "${_a}" in
+      "y" | "case" | "yes" )
+        return ${_true_}
+      ;;
+      "n" | "no" | "q"  )
+        echo -e "[${gbn}] Abort\n"
+        return ${_false_}
+      ;;
+      *)
+        echo -e "[${gbn}] Invalid\n"
+        _f=$((_f-1))
+      ;;
+    esac
+    if test ${_f} -lt 1 ; then
+      return ${_false_}
+    fi
+  done
+}
+
+function str/case() {
+  local _s=${1:-case}
+  local _d=${2:-false}
+  if ${_d} ; then
+    echo "${_s}" | tr '[:upper:]' '[:lower:]'
+  else
+    echo "${_s}" | tr '[:lower:]' '[:upper:]'
+  fi
+}
+
+function str/tolower() {
+  str/case "${*}" true
+}
+function str/toupper() {
+  str/case "${*}"
+}
