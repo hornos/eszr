@@ -54,7 +54,7 @@ setenv TURBOMOLE_HOME $approot
 setenv TURBODIR $approot
 setenv PARA_ARCH $arch
 setenv TURBOMOLE_SYSNAME $sysname
-setenv TURBOMOLE_BIN $approot/bin/${sysname}_mpi
+setenv TURBOMOLE_BIN $approot/bin/${sysname}_smp
 
 # mind the order
 prepend-path PATH $approot/bin/${sysname}_smp
