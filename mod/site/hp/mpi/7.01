@@ -13,6 +13,7 @@ set appname "Platform MPI"
 set appdesc "HP Platform MPI"
 set appurl  "http://www.platform.com/cluster-computing/platform-mpi"
 set license HP
+set app mpi
 set arch linux_amd64
 
 ### help
@@ -40,11 +41,11 @@ if { $module != $current } {
 
 ### env
 setenv ESZR_MPI $module
-setenv HP_MPI_HOME $approot/$module
+setenv HP_MPI_HOME $approot/$app/$release
 
-prepend-path LD_LIBRARY_PATH $approot/$module/lib/$arch
-prepend-path PATH $approot/$module/bin
-prepend-path MANPATH $approot/$module/share/man
+prepend-path LD_LIBRARY_PATH $approot/$app/$release/lib/$arch
+prepend-path PATH $approot/$app/$release/bin
+prepend-path MANPATH $approot/$app/$release/share/man
 
 ### mpi
-setenv MPI_ROOT $approot/$module
+setenv MPI_ROOT $approot/$app/$release
