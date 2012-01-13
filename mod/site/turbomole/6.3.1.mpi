@@ -1,0 +1,56 @@
+#%Module1.0
+
+### errors
+module-log error null
+
+### globals
+set module  [module-info name]
+set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
+set release [lrange [split $module {/}] end end]
+
+
+### eszr
+if [info exists env(ESZR_PKG)] {
+  set eszr_pkg $env(ESZR_PKG)
+} else {
+  puts stderr "Error: set ESZR_PKG"
+  break
+}
+
+set approot $eszr_pkg/$module
+set appname "Turbomole"
+set appdesc "Turbomole"
+set appurl  "http://www.turbomole.com/"
+set license Turbomole
+
+### help
+proc ModulesHelp { } {
+  global appname release appdesc appurl license
+  puts stderr "Application : $appname"
+  puts stderr "Description : $appdesc"
+  puts stderr "License     : $license"
+  puts stderr "URL         : $appurl"
+}
+
+module-whatis "$appname"
+
+### conflict
+if [info exists env(TURBOMOLE_PRG)] {
+  set current $env(TURBOMOLE_PRG)
+} else {
+  set current $module
+}
+if { $module != $current } {
+  if { [ is-loaded $current ] } {
+    module unload $current
+  }
+}
+
+### env
+setenv TURBOMOLE_PRG $module
+setenv TURBOMOLE_HOME $approot
+
+setenv TURBODIR $approot
+setenv PARA_ARCH MPI
+
+prepend-path PATH $approot/scripts
