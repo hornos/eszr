@@ -52,5 +52,6 @@ setenv TURBOMOLE_HOME $approot
 
 setenv TURBODIR $approot
 setenv PARA_ARCH SMP
+setenv TURBOMOLE_SYSNAME em64t-unknown-linux-gnu
 
 prepend-path PATH $approot/scripts
