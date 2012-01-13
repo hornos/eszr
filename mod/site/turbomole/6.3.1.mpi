@@ -56,5 +56,5 @@ setenv PARA_ARCH $arch
 setenv TURBOMOLE_SYSNAME $sysname
 
 # mind the order
-prepend-path PATH $approot/${sysname}_$arch
+prepend-path PATH $approot/${sysname}_mpi
 prepend-path PATH $approot/scripts
