@@ -8,6 +8,7 @@ set module  [module-info name]
 set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
 set sysname em64t-unknown-linux-gnu
+set arch MPI
 
 ### eszr
 if [info exists env(ESZR_PKG)] {
@@ -51,9 +52,9 @@ setenv TURBOMOLE_PRG $module
 setenv TURBOMOLE_HOME $approot
 
 setenv TURBODIR $approot
-setenv PARA_ARCH MPI
+setenv PARA_ARCH $arch
 setenv TURBOMOLE_SYSNAME $sysname
 
 # mind the order
-prepend-path PATH $approot/$sysname
+prepend-path PATH $approot/${sysname}_$arch
 prepend-path PATH $approot/scripts
