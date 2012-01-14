@@ -49,5 +49,6 @@ if { $module != $current } {
 ### env
 setenv VASP_PRG $module
 setenv VASP_HOME $approot
+setenv VASP_BIN $approot/bin
 
 prepend-path PATH $approot/bin
