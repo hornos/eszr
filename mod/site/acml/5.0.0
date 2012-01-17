@@ -39,7 +39,7 @@ if { $module != $current } {
 
 ### env
 setenv AMD_ACML $module
-setenv AMD_ACML_HOME $approot/$app-$release/mkl
+setenv AMD_ACML_HOME $approot/$release
 
 ### env
 setenv OMP_NUM_THREAD 1
