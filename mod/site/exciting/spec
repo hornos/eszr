@@ -35,8 +35,8 @@ proc ModulesHelp { } {
 module-whatis "$appname"
 
 ### conflict
-if [info exists env(ESPRESSO_SPEC)] {
-  set current $env(ESPRESSO_SPEC)
+if [info exists env(EXCITING_SPEC)] {
+  set current $env(EXCITING_SPEC)
 } else {
   set current $module
 }
@@ -47,5 +47,5 @@ if { $module != $current } {
 }
 
 ### env
-setenv ESPRESSO_SPEC $module
-setenv ESPRESSO_SPEC_HOME $approot
+setenv EXCITING_SPEC $module
+setenv EXCITING_SPEC_HOME $approot
