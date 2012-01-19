@@ -1,0 +1,54 @@
+#%Module1.0
+
+### errors
+# module-log error null
+
+### globals
+set module  [module-info name]
+set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
+set release [lrange [split $module {/}] end end]
+
+### eszr
+if [info exists env(ESZR_PKG)] {
+  set eszr_pkg $env(ESZR_PKG)
+} else {
+  puts stderr "Error: set ESZR_PKG"
+  break
+}
+
+set appname "NIIF Pecs System Environment"
+set appdesc ""
+set appurl  ""
+set license GPL
+
+### help
+proc ModulesHelp { } {
+  global appname release appdesc appurl license
+  puts stderr "Application : $appname"
+  puts stderr "Description : $appdesc"
+  puts stderr "License     : $license"
+  puts stderr "URL         : $appurl"
+}
+
+module-whatis "$appname"
+
+### conflict
+if [info exists env(ESZR_SYSTEM)] {
+  set current $env(ESZR_SYSTEM)
+} else {
+  set current $module
+}
+if { $module != $current } {
+  if { [ is-loaded $current ] } {
+    module unload $current
+  }
+}
+
+### env
+setenv ESZR_SYSTEM $module
+
+### system
+setenv ESZR_ARCH intel64
+setenv ESZR_HOME $env(HOME)
+setenv ESZR_DATA $env(HOME)
+setenv ESZR_SCRATCH /scratch/$env(USER)
