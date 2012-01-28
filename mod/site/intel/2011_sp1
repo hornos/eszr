@@ -37,3 +37,6 @@ setenv ESZR_COMPILER $module
 module load intel/cmp/2011_sp1.$version
 module load intel/mkl/2011_sp1.$version
 module load intel/ipp/2011_sp1.$version
+
+module load intel/ins/2011
+module load intel/amp/2011
