@@ -1,9 +1,7 @@
-# Module template
-# Uncomment first 2 lines
 #%Module1.0
 
 ### errors
-# module-log error null
+module-log error null
 
 ### globals
 set module  [module-info name]
@@ -20,9 +18,9 @@ if [info exists env(ESZR_PKG)] {
 }
 
 set approot $eszr_pkg/$module
-set appname "Template Module"
-set appdesc ""
-set appurl  ""
+set appname "PAPI"
+set appdesc "PAPI 4.2"
+set appurl  "http://icl.cs.utk.edu/papi/"
 set license GPL
 
 ### help
@@ -37,8 +35,8 @@ proc ModulesHelp { } {
 module-whatis "$appname"
 
 ### conflict
-if [info exists env(ESZR_TEMPLATE)] {
-  set current $env(ESZR_TEMPLATE)
+if [info exists env(PAPI_PRG)] {
+  set current $env(PAPI_PRG)
 } else {
   set current $module
 }
@@ -49,8 +47,8 @@ if { $module != $current } {
 }
 
 ### env
-setenv ESZR_TEMPLATE $module
-setenv ESZR_TEMPLATE_HOME $approot
+setenv PAPI_PRG $module
+setenv PAPI_HOME $approot
 
 ### path
 prepend-path PATH $approot/bin
