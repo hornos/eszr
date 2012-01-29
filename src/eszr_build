@@ -6,7 +6,7 @@ eszr_build_get="wget -vc --no-check-certificate"
 function help/eszr_build() {
   cat << EOF
   Usage: ${gbn} options
-                -p tgz - tgz package
+                -p cfg
                 -v - verbose
                 -h - help
                 -l - package list
@@ -39,7 +39,7 @@ function eszr_build/prepare() {
     msg "Directory not found: ${_dir}"
     exit 1
   fi
-  cd "${_dir}"
+  cd "${_dir}/${SRC}"
 
   if ! test -x "./configure" ; then
     msg "Configure not found"
@@ -71,6 +71,7 @@ while getopts hvlp: o; do
   case "$o" in
     p) _p=$OPTARG;;
     v) gdbg=true;;
+    l) ls *.cfg; exit 1;;
     h|*) help/eszr_build;;
   esac
 done
