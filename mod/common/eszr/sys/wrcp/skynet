@@ -15,6 +15,13 @@ if [info exists env(ESZR_PKG)] {
   puts stderr "Error: set ESZR_PKG"
   break
 }
+if [info exists env(ESZR_ROOT)] {
+  set eszr_root $env(ESZR_ROOT)
+} else {
+  puts stderr "Error: set ESZR_ROOT"
+  break
+}
+
 
 set appname "WRCP Skynet System Environment"
 set appdesc ""
@@ -52,3 +59,4 @@ setenv ESZR_ARCH intel64
 setenv ESZR_HOME $env(HOME)
 setenv ESZR_DATA /storage/niif/duf/data/$env(USER)
 setenv ESZR_SCRATCH /share/scr/$env(USER)
+setenv ESZR_GENDERS $eszr_root/etc/skynet/genders
