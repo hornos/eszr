@@ -16,6 +16,13 @@ if [info exists env(ESZR_PKG)] {
   break
 }
 
+if [info exists env(ESZR_ROOT)] {
+  set eszr_root $env(ESZR_ROOT)
+} else {
+  puts stderr "Error: set ESZR_ROOT"
+  break
+}
+
 set appname "NIIF Szeged System Environment"
 set appdesc ""
 set appurl  ""
@@ -52,5 +59,5 @@ setenv ESZR_ARCH intel64
 setenv ESZR_HOME $env(HOME)
 setenv ESZR_DATA $env(HOME)
 setenv ESZR_SCRATCH /scratch/$env(USER)
-setenv ESZR_GENDERS $eszr_pkg/etc/szeged/genders
+setenv ESZR_GENDERS $eszr_root/etc/szeged/genders
 
