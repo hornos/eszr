@@ -1,0 +1,10 @@
+service0    login
+admin       admin
+r1i0n[0-15] compute
+r1i1n[0-15] compute
+r1i2n[0-15] compute
+r1i3n[0-15] compute
+r2i0n[0-15] compute
+r2i1n[0-15] compute
+r2i2n[0-15] compute
+r2i3n[0-15] compute
