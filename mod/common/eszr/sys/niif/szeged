@@ -60,4 +60,4 @@ setenv ESZR_HOME $env(HOME)
 setenv ESZR_DATA $env(HOME)
 setenv ESZR_SCRATCH /scratch/$env(USER)
 setenv ESZR_GENDERS $eszr_root/etc/szeged/genders
-
+setenv ESZR_SCHEDULER=sge

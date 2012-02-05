@@ -1,12 +1,13 @@
 #%Module1.0
 
 ### errors
-# module-log error null
+module-log error null
 
 ### globals
 set module  [module-info name]
 set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
+set app template
 
 ### eszr
 if [info exists env(ESZR_PKG)] {
@@ -15,18 +16,12 @@ if [info exists env(ESZR_PKG)] {
   puts stderr "Error: set ESZR_PKG"
   break
 }
-if [info exists env(ESZR_ROOT)] {
-  set eszr_root $env(ESZR_ROOT)
-} else {
-  puts stderr "Error: set ESZR_ROOT"
-  break
-}
 
-
-set appname "NIIF Debrecen System Environment"
-set appdesc ""
-set appurl  ""
-set license GPL
+set approot $eszr_pkg/$module
+set appname "Open MPI"
+set appdesc "Open MPI"
+set appurl  "http://www.open-mpi.org/"
+set license BSD
 
 ### help
 proc ModulesHelp { } {
@@ -40,8 +35,8 @@ proc ModulesHelp { } {
 module-whatis "$appname"
 
 ### conflict
-if [info exists env(ESZR_SYSTEM)] {
-  set current $env(ESZR_SYSTEM)
+if [info exists env(ESZR_MPI)] {
+  set current $env(ESZR_MPI)
 } else {
   set current $module
 }
@@ -52,12 +47,12 @@ if { $module != $current } {
 }
 
 ### env
-setenv ESZR_SYSTEM $module
+setenv ESZR_MPI $module
 
-### system
-setenv ESZR_ARCH intel64
-setenv ESZR_HOME $env(HOME)
-setenv ESZR_DATA $env(HOME)
-setenv ESZR_SCRATCH /scratch/$env(USER)
-setenv ESZR_GENDERS $eszr_root/etc/debrecen/genders
-setenv ESZR_SCHEDULER=sge
+### path
+prepend-path PATH $approot/bin
+prepend-path MANPATH $approot/man
+prepend-path LD_LIBRARY_PATH $approot/lib
+
+setenv OPENMPI_HOME $approot
+setenv MPI_ROOT $approot

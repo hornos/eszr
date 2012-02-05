@@ -60,3 +60,4 @@ setenv ESZR_HOME $env(HOME)
 setenv ESZR_DATA /storage/niif/duf/data/$env(USER)
 setenv ESZR_SCRATCH /share/scr/$env(USER)
 setenv ESZR_GENDERS $eszr_root/etc/skynet/genders
+setenv ESZR_SCHEDULER=slurm
