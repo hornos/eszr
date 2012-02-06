@@ -20,5 +20,5 @@ while getopts hc o; do
 done
 
 _nf=".${gbn}"
-nodeattr -f "${ESZR_GENDERS}" -n compute > "${_fn}"
-pcpview ${_c} -n "${_fn}"
+nodeattr -f "${ESZR_GENDERS}" -n compute > "${_nf}"
+pcpview ${_c} -n "${_nf}"
