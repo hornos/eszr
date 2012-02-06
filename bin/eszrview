@@ -1,0 +1,24 @@
+#!/bin/bash
+
+gbn=$(basename ${BASH_SOURCE})
+
+### trap
+function eszrview/exit() {
+  if test -r "${_nf}" ; then
+    rm -f "${_nf}"
+  fi
+  exit $?
+}
+trap eszrview/exit INT TERM EXIT
+
+_c=""
+while getopts hc o; do
+  case "$o" in
+    c) _c="-c";;
+    h|*) help/eszrview;;
+  esac
+done
+
+_nf=".${gbn}"
+nodeattr -f "${ESZR_GENDERS}" -n compute > "${_fn}"
+pcpview ${_c} -n "${_fn}"
