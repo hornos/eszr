@@ -1,0 +1,22 @@
+#!/bin/bash
+
+_l=75
+while getopts l: o; do
+  case "$o" in
+    l) _l=$OPTARG;;
+  esac
+done
+
+eszrview | \
+awk -v l=${_l} '{
+  if(NF==14) {
+    if(!match($0,".*1 min.*")) {
+      split($0,a);
+      if(a[12]<l)
+        print;
+    }
+    else
+      print;
+  }
+  else print
+}'
