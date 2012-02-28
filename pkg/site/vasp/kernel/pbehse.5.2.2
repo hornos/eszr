@@ -1,5 +1,5 @@
 
-vasp_kernel_save="CHGCAR DOSCAR LOCPOT OUTCAR CHG EIGENVAL OSZICAR UEIG CONTCAR OUTCAR UPOT XDATCAR"
+vasp_kernel_save="INCAR CHGCAR DOSCAR LOCPOT OUTCAR CHG EIGENVAL OSZICAR UEIG CONTCAR OUTCAR UPOT XDATCAR"
 vasp_kernel_save="${vasp_kernel_save} vasprun.xml vasp.output"
 
 function vasp/kernel() {
@@ -38,19 +38,30 @@ function vasp/kernel() {
   run/valid/show OUTCAR "General timing"
 
   # save old outputs
+  echo -e "\n1.1 Save outputs"
+  gui/line
   local i
   for i in ${vasp_kernel_save} ; do
-    cp -fv ${i} ${i}.${_step}
+    if test -r "${i}" ; then
+      cp -fv ${i} ${i}.${_step}
+    else
+      echo "Not found: ${i}"
+    fi
   done
 
-  # continue geom
-  mv -fv CONTCAR POSCAR
+  # new inputs
+  echo -e "\n1.2 Prepare Inputs"
+  gui/line
+  if test -r CONTCAR ; then
+    mv -fv CONTCAR POSCAR
+  else
+    echo "Not found: CONTCAR"
+  fi
 
   # create new input
-  local _tmp=INCAR.${_step}
-  mv -fv INCAR ${_tmp}
+  local _incar=INCAR.${_step}
 
-  cat ${_tmp}            | \
+  cat ${_incar}          | \
   str/f/set NSW 0        | \
   str/f/set ISTART 1     | \
   str/f/set LHFCALC      | \
