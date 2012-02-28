@@ -40,15 +40,15 @@ function vasp/kernel() {
   # save old outputs
   local i
   for i in ${vasp_kernel_save} ; do
-    cp ${i} ${i}.${_step}
+    cp -fv ${i} ${i}.${_step}
   done
 
   # continue geom
-  mv CONTCAR POSCAR
+  mv -fv CONTCAR POSCAR
 
   # create new input
   local _tmp=INCAR.${_step}
-  mv INCAR ${_tmp}
+  mv -fv INCAR ${_tmp}
 
   cat ${_tmp}            | \
   str/f/set NSW 0        | \
