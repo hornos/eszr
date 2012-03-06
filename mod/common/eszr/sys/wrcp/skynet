@@ -62,8 +62,8 @@ setenv ESZR_SCRATCH /share/scr/$env(USER)
 setenv ESZR_GENDERS $eszr_root/etc/wrcp/skynet/genders
 setenv ESZR_SCHEDULER slurm
 ### node spec
-setenv ESZR_TYPE=cluster
-setenv ESZR_SCKTS=2
-setenv ESZR_CORES=4
-setenv ESZR_SLTPN=8
-setenv ESZR_MODE=mpi/mpt
+setenv ESZR_TYPE cluster
+setenv ESZR_SCKTS 2
+setenv ESZR_CORES 4
+setenv ESZR_SLTPN 8
+setenv ESZR_MODE mpi/mpt

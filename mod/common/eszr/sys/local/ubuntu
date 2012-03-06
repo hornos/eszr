@@ -60,5 +60,5 @@ setenv ESZR_HOME $env(HOME)
 setenv ESZR_DATA $env(HOME)
 setenv ESZR_SCRATCH /tmp
 ### node spec
-setenv ESZR_TYPE=smp
-setenv ESZR_SMPHOST=localhost
+setenv ESZR_TYPE smp
+setenv ESZR_SMPHOST localhost

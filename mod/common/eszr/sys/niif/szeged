@@ -62,8 +62,8 @@ setenv ESZR_SCRATCH /scratch/$env(USER)
 setenv ESZR_GENDERS $eszr_root/etc/niif/szeged/genders
 setenv ESZR_SCHEDULER sge
 ### node spec
-setenv ESZR_TYPE=cluster
-setenv ESZR_SCKTS=4
-setenv ESZR_CORES=12
-setenv ESZR_SLTPN=48
-setenv ESZR_MODE=mpi/ompi
+setenv ESZR_TYPE cluster
+setenv ESZR_SCKTS 4
+setenv ESZR_CORES 12
+setenv ESZR_SLTPN 48
+setenv ESZR_MODE mpi/ompi
