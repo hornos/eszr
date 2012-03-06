@@ -1,2 +1,2 @@
-alias systop="jobmon -a -t -n /etc/nodes"
+# alias systop="jobmon -a -t -n /etc/nodes"
 alias syshelp="lynx http://ngb.szfki.kfki.hu/w/en/Computing_Service#Skynet"

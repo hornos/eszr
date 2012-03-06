@@ -61,3 +61,10 @@ setenv ESZR_DATA $env(HOME)
 setenv ESZR_SCRATCH /scratch/$env(USER)
 setenv ESZR_GENDERS $eszr_root/etc/niif/budapest/genders
 setenv ESZR_SCHEDULER sge
+### node spec
+setenv ESZR_TYPE=cluster
+setenv ESZR_SCKTS=2
+setenv ESZR_CORES=12
+setenv ESZR_SLTPN=24
+setenv ESZR_MODE=mpi/ompi
+
