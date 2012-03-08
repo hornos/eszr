@@ -1,0 +1,29 @@
+#!/bin/bash
+
+sc=scontrol
+
+cmd="${1}"
+shift
+if test -z "${cmd}" ; then
+  echo "No command"
+  exit 1
+fi
+
+node="${1}"
+shift
+if test -z "${node}" ; then
+  echo "Node not found"
+  exit 1
+fi
+
+case "${cmd}" in
+  drain)
+    ${sc} update NodeName=${node} State=DRAIN
+  ;;
+  idle)
+    ${sc} update NodeName=${node} State=IDLE
+  ;;
+  show)
+    ${sc} show node ${node}
+  ;;
+esac
