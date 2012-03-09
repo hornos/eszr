@@ -1,6 +1,4 @@
 
-# default
-vasp_kernel_save="${run_prg_vasp_save}"
 
 function vasp/kernel() {
   # reserved global variables
@@ -34,12 +32,13 @@ function vasp/kernel() {
   # save old outputs
   echo -e "\n1.1 Save outputs"
   gui/line
-  run/prg/save "${_step}"
+  # save default outputs
+  run/prg/save "${_step}" ${run_prg_vasp_check_save}
 
   # new inputs
   echo -e "\n1.2 Prepare Inputs"
   gui/line
-  
+ 
   if readable CONTCAR ; then
     mv -fv CONTCAR POSCAR
   else
