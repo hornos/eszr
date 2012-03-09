@@ -1,0 +1,2 @@
+alias eszrtop="eszrview -a -t"
+alias eszrhelp="lynx ${ESZR_HELP}"

@@ -1,7 +1,7 @@
 ### global
-for s in "/site/eszr/env/wrcp/skynet.alias" \
-         "/site/eszr/env/wrcp/skynet.functions" ; do
-  if test -r "${s}" ; then
-    source "${s}"
-  fi
-done
+#for s in "/site/eszr/env/wrcp/skynet.alias" \
+#         "/site/eszr/env/wrcp/skynet.functions" ; do
+#  if test -r "${s}" ; then
+#    source "${s}"
+#  fi
+#done

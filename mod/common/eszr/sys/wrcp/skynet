@@ -61,6 +61,7 @@ setenv ESZR_DATA /storage/niif/duf/data/$env(USER)
 setenv ESZR_SCRATCH /share/scr/$env(USER)
 setenv ESZR_GENDERS $eszr_root/etc/wrcp/skynet/genders
 setenv ESZR_SCHEDULER slurm
+setenv ESZR_HELP "http://ngb.szfki.kfki.hu/w/en/Computing_Service#Skynet"
 ### node spec
 setenv ESZR_TYPE cluster
 setenv ESZR_SCKTS 2
