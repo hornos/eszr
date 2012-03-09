@@ -1,0 +1,73 @@
+
+# default
+vasp_kernel_save="${run_prg_vasp_save}"
+
+function vasp/kernel() {
+  # reserved global variables
+  # ${_inp} : input
+  # ${_out} : output
+  # ${_cmd} : command
+
+  import gui
+  import str/f
+
+  ### declare all variables as local
+  # kernel step
+  local _step="pbe"
+
+  ### begin pbe step
+  echo -e "\n1. PBE 1scf"
+  gui/line
+
+  run/prg/step
+  if failed $? ; then $failure; fi
+
+  # validate
+  run/prg/vasp/check/wavecar
+  if failed $? ; then $failure; fi
+
+  # show timing
+  run/prg/vasp/check/timing
+
+  # save old outputs
+  echo -e "\n1.1 Save outputs"
+  gui/line
+  run/prg/save "${_step}"
+
+  # new inputs
+  echo -e "\n1.2 Prepare Inputs"
+  gui/line
+  
+  if readable CONTCAR ; then
+    mv -fv CONTCAR POSCAR
+  else
+    msg "Not found: CONTCAR"
+  fi
+
+  # create new input
+  local _incar=INCAR.${_step}
+  cat ${_incar}          | \
+  str/f/set NSW 1000     | \
+  str/f/set ISTART 1     | \
+  str/f/set LHFCALC      | \
+  str/f/set AEXX 0.25    | \
+  str/f/set AGGAX 0.25   | \
+  str/f/set AGGAC 1.00   | \
+  str/f/set HFSCREEN 0.2 | \
+  str/f/set ENCUTFOCK 0  | \
+  str/f/set IALGO 53     | \
+  str/f/set TIME 0.4     > INCAR
+  ### end pbe step
+
+  ### begin hse step
+  _step="hse"
+  echo -e "\n2. HSE CG"
+  gui/line
+
+  # run hse step
+  run/prg/step
+  if failed $? ; then $failure; fi
+
+  # show timing
+  run/prg/vasp/check/timing
+}
