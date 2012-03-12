@@ -46,7 +46,7 @@ function vasp/kernel() {
   fi
 
   # create new input
-  local _incar=INCAR.${_step}
+  local _incar=${_step}.INCAR
   cat ${_incar}          | \
   str/f/set NSW 0        | \
   str/f/set ISTART 1     | \
