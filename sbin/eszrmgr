@@ -16,6 +16,7 @@ if test -z "${node}" ; then
   exit 1
 fi
 
+# TODO submenus like sysmgr
 case "${cmd}" in
   drain)
     ${sc} update NodeName=${node} State=DRAIN
@@ -25,5 +26,8 @@ case "${cmd}" in
   ;;
   show)
     ${sc} show node ${node}
+  ;;
+  refresh)
+    /usr/sbin/nscd -i group
   ;;
 esac
