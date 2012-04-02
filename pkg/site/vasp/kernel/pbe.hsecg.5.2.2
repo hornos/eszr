@@ -49,6 +49,10 @@ function vasp/kernel() {
 
   # create new input
   local _incar=${_step}.INCAR
+  if ! readable "${_incar}" ; then
+    msg "INCAR not found: ${_incar}"
+    $failure
+  fi
   cat ${_incar}          | \
   str/f/set NSW 1000     | \
   str/f/set ISTART 1     | \
