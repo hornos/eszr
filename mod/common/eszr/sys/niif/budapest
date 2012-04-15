@@ -68,4 +68,3 @@ setenv ESZR_SCKTS 2
 setenv ESZR_CORES 12
 setenv ESZR_SLTPN 24
 setenv ESZR_MODE mpi/ompi
-
