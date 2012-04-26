@@ -1,0 +1,75 @@
+
+# default
+vasp_kernel_save="${run_prg_vasp_save}"
+
+function vasp/kernel() {
+  # reserved global variables
+  # ${_inp} : input
+  # ${_out} : output
+  # ${_cmd} : command
+
+  import gui
+  import str/f
+  import run/prg
+  import run/prg/vasp/check
+
+  ###
+  ### STEP 1. MPI
+  ###
+  local _step="mpi"
+  u/title "MPI"
+
+  run/prg/step
+  if failed $? ; then $failure; fi
+
+  ### timing
+  run/prg/vasp/check/timing
+
+
+
+  ###
+  ### STEP 2. MPI -> MPIOMP
+  ###
+  local _step="mpiomp"
+  u/title "MPI -> MPIOMP"
+
+  BIND="omplace -s 1"
+  run/prg/mode mpiomp
+  run/prg/step
+  if failed $? ; then $failure; fi
+
+  ### timing
+  run/prg/vasp/check/timing
+
+
+
+  ###
+  ### STEP 3. MPIOMP -> reduced MPI
+  ###
+  local _step="rmpi"
+  u/title "MPIOMP -> reduced MPI"
+
+  BIND="dplace -s 1"
+  run/prg/mode mpi 2 2
+  run/prg/step
+  if failed $? ; then $failure; fi
+
+  ### timing
+  run/prg/vasp/check/timing
+
+
+
+  ###
+  ### STEP 4. reduced MPI -> reduced MPIOMP
+  ###
+  local _step="rmpiomp"
+  u/title "reduced MPI -> reduced MPIOMP"
+
+  BIND="omplace -s 1"
+  run/prg/mode mpiomp 1 4
+  run/prg/step
+  if failed $? ; then $failure; fi
+
+  ### timing
+  run/prg/vasp/check/timing
+}
