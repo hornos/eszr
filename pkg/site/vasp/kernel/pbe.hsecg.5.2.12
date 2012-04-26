@@ -13,68 +13,101 @@ function vasp/kernel() {
   import run/prg
   import run/prg/vasp/check
 
-  ### declare all variables as local
-  # kernel step
+  ###
+  ### STEP 1. PBE preconditioning
+  ###
   local _step="pbe"
-
-  ### begin pbe step
-  echo -e "\n1. PBE 1scf"
-  gui/line
-
+  u/title "PBE 1scf"
   run/prg/step
   if failed $? ; then $failure; fi
 
-  # validate
+  ### validate - check WAVECAR
   run/prg/vasp/check/wavecar
   if failed $? ; then $failure; fi
 
-  # show timing
+  ### timing
   run/prg/vasp/check/timing
 
-  # save old outputs
-  echo -e "\n1.1 Save outputs"
-  gui/line
-  # save default outputs
+  ### save outputs
+  u/title "Save outputs"
   run/prg/save "${_step}" ${run_prg_vasp_check_save}
 
-  # new inputs
-  echo -e "\n1.2 Prepare Inputs"
-  gui/line
-  
+
+
+  ###
+  ### STEP 2. HSE Fast CG
+  ###
+  u/title "HSE Fast CG"
+
+  ### new input
   if readable CONTCAR ; then
     mv -fv CONTCAR POSCAR
   else
     msg "Not found: CONTCAR"
-  fi
-
-  # create new input
-  local _incar=${_step}.INCAR
-  if ! readable "${_incar}" ; then
-    msg "INCAR not found: ${_incar}"
     $failure
   fi
-  cat ${_incar}          | \
-  str/f/set NSW 1000     | \
-  str/f/set ISTART 1     | \
-  str/f/set LHFCALC      | \
-  str/f/set AEXX 0.25    | \
-  str/f/set AGGAX 0.25   | \
-  str/f/set AGGAC 1.00   | \
-  str/f/set HFSCREEN 0.2 | \
-  str/f/set PRECFOCK N   | \
-  str/f/set IALGO 53     | \
-  str/f/set TIME 0.4     > INCAR
-  ### end pbe step
 
-  ### begin hse step
-  _step="hse"
-  echo -e "\n2. HSE CG"
-  gui/line
+  # create new input for HSE fast
+  # http://cms.mpi.univie.ac.at/vasp/vasp/PRECFOCK_FFT_grid_in_Hartree_Fock_GW_related_routines.html
+  # http://cms.mpi.univie.ac.at/vasp/vasp/Amount_exact_DFT_exchange_correlation_AEXX_AGGAX_AGGAC_ALDAC_tags.html
+  local _incar=${_step}.INCAR
+  cat ${_incar}           | \
+  str/f/set NSW 100       | \
+  str/f/set EDIFF 5E-04   | \
+  str/f/set ISTART 1      | \
+  str/f/set LHFCALC       | \
+  str/f/set AEXX 0.25     | \
+  str/f/set AGGAX 0.25    | \
+  str/f/set AGGAC 1.00    | \
+  str/f/set HFSCREEN 0.2  | \
+  str/f/set PRECFOCK Fast | \
+  str/f/set IALGO 53      | \
+  str/f/set ISYM 3        | \
+  str/f/set TIME 0.4      > INCAR
 
-  # run hse step
+  _step="hsef"
   run/prg/step
   if failed $? ; then $failure; fi
 
-  # show timing
+  ### validate - check accuracy
+  run/prg/vasp/check/accuracy
+  if failed $? ; then $failure; fi
+
+  ### timing
+  run/prg/vasp/check/timing
+
+  ### save outputs
+  u/title "Save outputs"
+  run/prg/save "${_step}" ${run_prg_vasp_check_save}
+
+
+
+  ###
+  ### STEP 3. HSE Normal CG
+  ###
+  u/title "HSE Normal CG"
+
+  ### new input
+  if readable CONTCAR ; then
+    mv -fv CONTCAR POSCAR
+  else
+    msg "Not found: CONTCAR"
+    $failure
+  fi
+
+  local _incar=${_step}.INCAR
+  cat ${_incar}             | \
+  str/f/set EDIFF 1E-04     | \
+  str/f/set PRECFOCK Normal > INCAR
+
+  _step="hsen"
+  run/prg/step
+  if failed $? ; then $failure; fi
+
+  ### validate - check accuracy
+  run/prg/vasp/check/accuracy
+  if failed $? ; then $failure; fi
+
+  ### timing
   run/prg/vasp/check/timing
 }
