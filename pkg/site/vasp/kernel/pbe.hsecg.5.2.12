@@ -53,7 +53,7 @@ function vasp/kernel() {
   local _incar=${_step}.INCAR
   cat ${_incar}           | \
   str/f/set NSW 100       | \
-  str/f/set EDIFF 5E-04   | \
+  str/f/set EDIFFG 5E-04  | \
   str/f/set ISTART 1      | \
   str/f/set LHFCALC       | \
   str/f/set AEXX 0.25     | \
@@ -97,7 +97,7 @@ function vasp/kernel() {
 
   local _incar=${_step}.INCAR
   cat ${_incar}             | \
-  str/f/set EDIFF 1E-04     | \
+  str/f/set EDIFFG 1E-04    | \
   str/f/set PRECFOCK Normal > INCAR
 
   _step="hsen"
