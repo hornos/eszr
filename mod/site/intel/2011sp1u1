@@ -8,7 +8,7 @@ set module  [module-info name]
 set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
 set release [lrange [split $module {/}] end end]
 set approot /opt/intel
-set appname "Intel Environment 2011 SP1"
+set appname "Intel Environment 2011 SP1 Update 1"
 set version 7.256
 
 ### help
