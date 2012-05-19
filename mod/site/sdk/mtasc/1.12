@@ -18,8 +18,8 @@ if [info exists env(ESZR_PKG)] {
 }
 
 set approot $eszr_pkg/$module
-set appname "MTASC"
-set appdesc "MTASC 1.12"
+set appname "MTASC SDK"
+set appdesc "MTASC SDK 1.12"
 set appurl  "http://www.mtasc.org/"
 set license GPL
 
