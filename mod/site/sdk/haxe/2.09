@@ -50,6 +50,8 @@ if { $module != $current } {
 setenv HAXE_SDK $module
 setenv HAXEPATH $approot
 
+prepend-path HAXE_LIBRARY_PATH $approot/sdk
+
 ### path
 prepend-path PATH $approot
 
