@@ -50,6 +50,6 @@ if { $module != $current } {
 setenv MTASC_SDK $module
 
 ### path
-prepend-path PATH $approot/platform-tools
+prepend-path PATH $approot
 
 setenv MTASC_HOME $approot
