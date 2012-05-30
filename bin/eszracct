@@ -1,0 +1,7 @@
+#!/bin/bash
+
+gbn=$(basename ${BASH_SOURCE})
+
+lastmonth=${1:-$(date -d"1 month ago" +%Y-%m-%d)}
+acct="user,account,jobname,avecpu,ntasks,alloccpus,start,elapsed,state"
+sacct -S "${lastmonth}" -a -o "${acct}"
