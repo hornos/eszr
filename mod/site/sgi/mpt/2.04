@@ -10,7 +10,7 @@ set release [lrange [split $module {/}] end end]
 
 set approot /opt/sgi
 set appname "SGI MPT (MPI)"
-set appdesc "SGI Message Passing Toolkit (MPT)"
+set appdesc "SGI Message Passing Toolkit 2.04 (MPT)"
 set appurl  "http://techpubs.sgi.com/library/tpl/cgi-bin/browse.cgi?cmd=toc&coll=linux&db=bks&pth=/SGI_Developer/MPT_UG"
 set license SGI
 set app mpt
