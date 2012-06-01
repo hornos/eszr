@@ -18,10 +18,10 @@ if [info exists env(ESZR_PKG)] {
 }
 
 set approot $eszr_pkg/$module
-set appname "Open MPI"
-set appdesc "Open MPI"
-set appurl  "http://www.open-mpi.org/"
-set license BSD
+set appname "Netcdf"
+set appdesc "Netcdf 4.1.2"
+set appurl  "http://www.unidata.ucar.edu/software/netcdf/"
+set license Netcdf
 
 ### help
 proc ModulesHelp { } {
@@ -35,8 +35,8 @@ proc ModulesHelp { } {
 module-whatis "$appname"
 
 ### conflict
-if [info exists env(ESZR_MPI)] {
-  set current $env(ESZR_MPI)
+if [info exists env(NETCDF_PRG)] {
+  set current $env(NETCDF_PRG)
 } else {
   set current $module
 }
@@ -47,12 +47,10 @@ if { $module != $current } {
 }
 
 ### env
-setenv ESZR_MPI $module
+setenv NETCDF_PRG $module
 
 ### path
+setenv NETCDF_HOME $approot
 prepend-path PATH $approot/bin
 prepend-path MANPATH $approot/man
 prepend-path LD_LIBRARY_PATH $approot/lib
-
-setenv OPENMPI_HOME $approot
-setenv MPI_ROOT $approot
