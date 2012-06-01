@@ -2,6 +2,20 @@
 
 gbn=$(basename ${BASH_SOURCE})
 
-lastmonth=${1:-$(date -d"1 month ago" +%Y-%m-%d)}
+_d=$(date -d"1 month ago" +%Y-%m-%d)
+_u=""
+while getopts d:u: o; do
+  case "$o" in
+    d) _d=$OPTARG;;
+    u) _u=$OPTARG;;
+  esac
+done
+
 acct="user,account,jobname,avecpu,ntasks,alloccpus,start,elapsed,state"
-sacct -S "${lastmonth}" -a -o "${acct}"
+
+if test -z "${_u}" ; then
+  sacct -S "${_d}" -a -o "${acct}"
+else
+  sacct -S "${_d}" -a -o "${acct}" | \
+  awk -v u="${_u}" 'NR <=2 {print} {if(match($0,u)) print;}'
+fi
