@@ -1,0 +1,18 @@
+#!/bin/bash
+
+watch -n 2 gstat -i admin | \
+awk '{
+  if(match($0,"CPUs")) {
+    print "    ",$0;
+    next;
+  }
+  if(match($0,"^n[0-9].*")) {
+    split($0,a,".");
+    getline;
+    print a[1],$0;
+  }
+  else
+    print;
+}'
+
+
