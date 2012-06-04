@@ -1,6 +1,6 @@
 #!/bin/bash
 
-watch -n 2 gstat -i admin | \
+gstat -i admin | \
 awk '{
   if(match($0,"CPUs")) {
     print "    ",$0;
