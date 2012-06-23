@@ -55,5 +55,5 @@ prepend-path NLSPATH $approot/${app}_${release}/compiler/lib/$arch/locale/en_US/
 ### License
 setenv INTEL_LICENSE_FILE /opt/intel/licenses/
 
-prepend-path OPENCL_VENDOR_PATH $approot/etc/OpenCL/vendors
+prepend-path OPENCL_VENDOR_PATH $approot/${app}_${release}/compiler/etc/OpenCL/vendors
 prepend-path LD_LIBRARY_PATH $approot/${app}_${release}/compiler/lib/$arch/OpenCL/vendors/intel
