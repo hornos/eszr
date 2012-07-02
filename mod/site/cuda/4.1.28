@@ -53,5 +53,6 @@ setenv CUDA_HOME $approot
 ### path
 prepend-path PATH $approot/bin
 prepend-path LD_LIBRARY_PATH $approot/lib64
+prepend-path DYLD_LIBRARY_PATH $approot/lib
 
 prepend-path OPENCL_VENDOR_PATH $approot/etc/OpenCL/vendors
