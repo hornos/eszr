@@ -62,4 +62,6 @@ setenv ESZR_SCRATCH $env(HOME)/tmp
 ### node spec
 setenv ESZR_TYPE smp
 setenv ESZR_SMPHOST localhost
+### vm
+setenv ESZR_VMGR vbox
 
