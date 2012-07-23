@@ -1,0 +1,63 @@
+#%Module1.0#####################################################################
+
+set modulefile [string map {" " "/"} [lrange [split [module-info name] {/}] 0 1]]
+set apphome    /opt/intel
+set appname    "Intel Compiler"
+set appdesc    "Intel Compiler 11.1"
+set appurl     "http://software.intel.com/en-us/articles/intel-compilers/"
+set license    Intel
+set release    [lrange [split [module-info name] {/}] 2 2]
+set arch       intel64
+set app        Compiler
+
+set _release   [lrange [split [string map {"/" "."} [module-info name] ] {.} ] 2 4]
+set major      [string map {" " "."} [lrange $_release 0 1 ]]
+set minor      [lrange $_release 2 2]
+
+module-whatis   "$appname"
+
+### conflict
+if [info exists env(INTEL_COMPILER)] {
+  set current $env(INTEL_COMPILER)
+} else {
+  set current $module
+}
+if { $module != $current } {
+  if { [ is-loaded $current ] } {
+    module unload $current
+  }
+}
+
+# Debugger
+
+prepend-path LD_LIBRARY_PATH $apphome/$app/$major/$minor/idb/lib/$arch
+prepend-path DYLD_LIBRARY_PATH $apphome/$app/$major/$minor/idb/lib/$arch
+prepend-path NLSPATH $apphome/$app/$major/$minor/$arch/locale/en_US
+
+
+# Compiler
+
+prepend-path PATH $apphome/$app/$major/$minor/bin/$arch
+prepend-path MANPATH $apphome/$app/$major/$minor/man
+prepend-path LD_LIBRARY_PATH $apphome/$app/$major/$minor/lib/$arch
+prepend-path NLSPATH $apphome/$app/$major/$minor/lib/$arch/locale/en_US
+
+# Env
+
+setenv INTEL_IFORT_HOME $apphome/$app/$major/$minor
+setenv INTEL_ICC_HOME   $apphome/$app/$major/$minor
+
+# IPP
+
+# prepend-path LD_LIBRARY_PATH $apphome/$app/$major/$minor/ipp/lib/em64t
+# prepend-path NLSPATH $apphome/$app/$major/$minor/ipp/lib/em64t/locale/en_US
+
+# Env
+
+# setenv INTEL_IPP_HOME $apphome/$app/$major/$minor/ipp
+
+# module load intel/ipp/$release
+
+# The license file
+
+setenv INTEL_LICENSE_FILE /opt/intel/licenses/

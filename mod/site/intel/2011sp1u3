@@ -1,0 +1,42 @@
+#%Module1.0
+
+### errors
+module-log error null
+
+### globals
+set module  [module-info name]
+set program [string map {" " "/"} [lrange [split $module {/}] 0 end-1]]
+set release [lrange [split $module {/}] end end]
+set approot /opt/intel
+set appname "Intel Environment 2011 SP1 Update 3"
+set version 11.339
+
+### help
+proc ModulesHelp { } {
+  global appname
+  puts stderr "Application : $appname"
+}
+
+module-whatis "$appname"
+
+### conflict
+if [info exists env(ESZR_COMPILER)] {
+  set current $env(ESZR_COMPILER)
+} else {
+  set current $module
+}
+if { $module != $current } {
+  if { [ is-loaded $current ] } {
+    module unload $current
+  }
+}
+
+### env
+setenv ESZR_COMPILER $module
+
+module load intel/cmp/2011_sp1.$version
+module load intel/mkl/2011_sp1.$version
+module load intel/ipp/2011_sp1.$version
+
+module load intel/ins/2011
+module load intel/amp/2011
