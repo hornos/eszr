@@ -1,0 +1,60 @@
+
+# default
+vasp_kernel_save="${run_prg_vasp_save}"
+
+function vasp/kernel() {
+  # reserved global variables
+  # ${_inp} : input
+  # ${_out} : output
+  # ${_cmd} : command
+
+  import gui
+  import str/f
+  import run/prg
+  import run/prg/vasp/check
+
+  ###
+  ### Optimized NPAR
+  ###
+  # http://www.nsc.liu.se/~pla/blog/triobench-part1/
+
+  local _nodes=${NODES:-0}
+  local _sckts=${SCKTS:-0}
+  local _cores=${CORES:-0}
+  if test ${_nodes} -gt 0 || \
+     test ${_sckts} -gt 0 || \
+     test ${_cores} -gt 0 ; then
+
+    local _total_cores=$((_nodes*_sckts*_cores))
+
+    local _npar=1
+    if test ${_total_cores} -gt 4 ; then
+      _npar=2
+    elif test ${_total_cores} -ge 64 ; then
+      _npar=4
+    elif test ${_total_cores} -ge 128 ; then
+      _npar=8
+    else
+      _npar=1
+    fi
+
+    local _incar=INCAR.orig
+    cp -v INCAR ${_incar}
+    cat ${_incar}           | \
+    str/f/set NPAR ${_npar}   \
+    > INCAR
+    u/title "Optimized NPAR"
+  else
+    u/title "NPAR not optimized"
+  fi
+
+  run/prg/step
+  if failed $? ; then $failure; fi
+
+  ### timing
+  run/prg/vasp/check/timing
+
+  ### save outputs
+  u/title "Save outputs"
+  run/prg/save "${_step}" ${run_prg_vasp_check_save}
+}
